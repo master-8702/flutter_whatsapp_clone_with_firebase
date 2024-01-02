@@ -9,9 +9,8 @@ class ContactsList extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: ListView.builder(
-        shrinkWrap: true,
-        physics: const BouncingScrollPhysics(
-            decelerationRate: ScrollDecelerationRate.normal),
+        // shrinkWrap: true,
+        // physics: const NeverScrollableScrollPhysics(),
         itemCount: contacts.length,
         itemBuilder: (context, index) {
           final currentContact = contacts[index];
