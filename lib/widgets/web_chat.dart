@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_whatsapp_clone_with_firebase/constants/test_files.dart';
-import 'package:flutter_whatsapp_clone_with_firebase/widgets/chat_messages.dart';
+import 'package:flutter_whatsapp_clone_with_firebase/widgets/chat_message.dart';
 
 class WebChat extends StatelessWidget {
   const WebChat({super.key});

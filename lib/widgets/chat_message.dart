@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_whatsapp_clone_with_firebase/constants/colors.dart';
 
+import 'package:flutter_whatsapp_clone_with_firebase/constants/colors.dart';
 import 'package:flutter_whatsapp_clone_with_firebase/models/message_model.dart';
 
 class ChatMessage extends StatefulWidget {
@@ -54,13 +54,10 @@ class _ChatMessageState extends State<ChatMessage> {
                     constraints: BoxConstraints(
                         maxWidth: MediaQuery.of(context).size.width * 0.4),
                     // width: MediaQuery.of(context).size.width * 0.5,
-                    child: Expanded(
-                      child: Text(
-                        widget.message.text,
-                        style:
-                            const TextStyle(color: Colors.white, height: 1.5),
-                        // textAlign: TextAlign.left,
-                      ),
+                    child: Text(
+                      widget.message.text,
+                      style: const TextStyle(color: Colors.white, height: 1.5),
+                      // textAlign: TextAlign.left,
                     ),
                   ),
                 ],
