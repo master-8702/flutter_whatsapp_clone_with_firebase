@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_whatsapp_clone_with_firebase/constants/colors.dart';
+import 'package:flutter_whatsapp_clone_with_firebase/responsive/responsive_layout.dart';
+import 'package:flutter_whatsapp_clone_with_firebase/screens/mobile_screen_layout.dart';
+import 'package:flutter_whatsapp_clone_with_firebase/screens/web_screen_layout.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,13 +15,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Whatsapp',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
-        useMaterial3: true,
-      ),
-      home: const Scaffold(
-          body: Center(child: Text('Flutter whatsapp clone home page'))),
+      // theme: ThemeData.dark().copyWith(colorScheme: const ColorScheme.dark().copyWith(background: backgroundColor) ),
+      theme:
+          ThemeData.dark().copyWith(scaffoldBackgroundColor: backgroundColor),
+      home: const ResponsiveLayout(
+          webScreenlayout: WebScreenLayout(),
+          mobileScreenlayout: MobileScreenLayout()),
     );
   }
 }
