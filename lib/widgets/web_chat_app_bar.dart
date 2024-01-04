@@ -22,7 +22,7 @@ class WebChatAppBar extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20.0),
           child: CircleAvatar(
             backgroundImage: AssetImage(
-              'assets/images/tony pp.jpg',
+              'assets/images/tony.jpg',
             ),
           ),
         ),

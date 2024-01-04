@@ -20,7 +20,7 @@ class WebProfileBar extends StatelessWidget {
         child: Row(
           children: [
             const CircleAvatar(
-              backgroundImage: AssetImage("assets/images/tony pp.jpg"),
+              backgroundImage: AssetImage("assets/images/tony.jpg"),
               radius: 20,
             ),
             const Spacer(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_whatsapp_clone_with_firebase/constants/test_files.dart';
 
 class ContactsList extends StatelessWidget {
@@ -11,24 +12,30 @@ class ContactsList extends StatelessWidget {
       child: ListView.builder(
         // shrinkWrap: true,
         // physics: const NeverScrollableScrollPhysics(),
-        itemCount: contacts.length,
+        itemCount: chatList.length,
         itemBuilder: (context, index) {
-          final currentContact = contacts[index];
+          final contact = chatList[index];
           return InkWell(
             onTap: () {},
             child: ListTile(
               leading: CircleAvatar(
-                backgroundImage:
-                    NetworkImage(currentContact['profilePic'].toString()),
+                backgroundImage: AssetImage(contact.sender.imageUrl),
               ),
-              title: Text(currentContact['name'].toString()),
+              title: Text(contact.sender.name),
               subtitle: Padding(
                 padding: const EdgeInsets.only(top: 8.0),
-                child: Text(currentContact['message'].toString()),
+                child: Text(
+                  contact.text,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
               trailing: Text(
-                currentContact['time'].toString(),
-                style: const TextStyle(color: Colors.grey),
+                contact.time,
+                style: const TextStyle(
+                  color: Colors.grey,
+                ),
+                
               ),
             ),
           );
