@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_whatsapp_clone_with_firebase/common/contacts_list.dart';
+
 import 'package:flutter_whatsapp_clone_with_firebase/constants/colors.dart';
+import 'package:flutter_whatsapp_clone_with_firebase/common/contacts_list.dart';
 
 class MobileScreenLayout extends StatelessWidget {
   const MobileScreenLayout({super.key});
@@ -55,7 +56,23 @@ class MobileScreenLayout extends StatelessWidget {
                   )
                 ]),
           ),
-          body: const ContactsList(),
+          body: const TabBarView(children: [
+            ContactsList(),
+            Center(
+              child: Text("update tab"),
+            ),
+            Center(
+              child: Text("Calls tab"),
+            ),
+          ]),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {},
+            backgroundColor: tabColor,
+            child: const Icon(
+              Icons.comment,
+              color: Colors.white,
+            ),
+          ),
         ));
   }
 }
