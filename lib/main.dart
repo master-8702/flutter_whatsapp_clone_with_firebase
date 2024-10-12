@@ -1,10 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_whatsapp_clone_with_firebase/constants/colors.dart';
+import 'package:flutter_whatsapp_clone_with_firebase/firebase_options.dart';
 import 'package:flutter_whatsapp_clone_with_firebase/responsive/responsive_layout.dart';
 import 'package:flutter_whatsapp_clone_with_firebase/screens/mobile_screen_layout.dart';
 import 'package:flutter_whatsapp_clone_with_firebase/screens/web_screen_layout.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
