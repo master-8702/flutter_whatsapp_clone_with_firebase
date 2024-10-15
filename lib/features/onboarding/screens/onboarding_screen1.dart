@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_whatsapp_clone_with_firebase/constants/colors.dart';
 import 'package:flutter_whatsapp_clone_with_firebase/constants/languages.dart';
+import 'package:flutter_whatsapp_clone_with_firebase/features/onboarding/screens/onboarding_screen2.dart';
 
 class OnboardingScreen1 extends StatefulWidget {
   const OnboardingScreen1({super.key});
@@ -80,7 +81,13 @@ class _OnboardingScreen1State extends State<OnboardingScreen1> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) {
+              return const OnboardingScreen2();
+            },
+          ));
+        },
         backgroundColor: tabColor,
         child: const Icon(
           Icons.arrow_forward,
