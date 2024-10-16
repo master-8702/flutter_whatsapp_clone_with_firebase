@@ -14,3 +14,5 @@ const mobileChatBoxColor = Color.fromRGBO(31, 44, 52, 1);
 const iconBackgroundColor = Color.fromRGBO(0, 233, 89, 1);
 const iconColorBlack = Color.fromRGBO(0, 0, 0, 1);
 const iconColorGrey = Color.fromRGBO(158, 158, 158, 1);
+const greyColor = Color.fromRGBO(158, 158, 158, 1);
+const greyBlack = Color.fromRGBO(0, 0, 0, 1);

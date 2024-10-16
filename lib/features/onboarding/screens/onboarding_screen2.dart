@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_whatsapp_clone_with_firebase/constants/colors.dart';
 import 'package:flutter_whatsapp_clone_with_firebase/constants/languages.dart';
+import 'package:flutter_whatsapp_clone_with_firebase/features/authentication/screens/login_screen.dart';
 
 class OnboardingScreen2 extends StatefulWidget {
   const OnboardingScreen2({super.key});
@@ -48,7 +49,7 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
               const Text(
                 'Read our privacy policy. tap "Agree and continue" to accept the Terms o services',
                 textAlign: TextAlign.center,
-                style: TextStyle(),
+                style: TextStyle(color: greyColor),
               ),
               SizedBox(
                 height: height / 50,
@@ -103,7 +104,11 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
                                           // take the $value (the selected language)
                                           // dismiss the bottomSheet
                                           // and change the locale accordingly
-                                          debugPrint(value);
+                                          if (value != null) {
+                                            setState(() {
+                                              selectedValue = value;
+                                            });
+                                          }
                                           Navigator.pop(context);
                                         },
                                       ),
@@ -118,24 +123,25 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
                     },
                   );
                 },
-                child: const Row(
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.language,
                       color: tabColor,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Text(
-                      'English',
-                      style: TextStyle(color: tabColor),
+                      // 'English',
+                      selectedValue,
+                      style: const TextStyle(color: tabColor),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
-                    Icon(Icons.keyboard_arrow_down, color: tabColor),
+                    const Icon(Icons.keyboard_arrow_down, color: tabColor),
                   ],
                 ),
               ),
@@ -147,7 +153,16 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
                     child: TextButton(
                         style: const ButtonStyle(
                             backgroundColor: WidgetStatePropertyAll(tabColor)),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const LoginScreen();
+                              },
+                            ),
+                          );
+                        },
                         child: const Text(
                           'Agree and Continue',
                           style: TextStyle(color: Colors.black),
