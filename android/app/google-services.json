@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1072557538193",
+    "project_id": "whatsapp-clone-backend-ba6fe",
+    "storage_bucket": "whatsapp-clone-backend-ba6fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1072557538193:android:58ef53c1642c0a97b43830",
+        "android_client_info": {
+          "package_name": "com.example.flutter_whatsapp_clone_with_firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6hIJm7BH5A_ti5qTQ_9pH3iUpsguNeIQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
