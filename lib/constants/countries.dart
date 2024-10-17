@@ -3,7 +3,7 @@ const List<Map<String, dynamic>> countryList = [
     'flag': 'assets/images/flags/cn.png', 
     'name': 'China',
     'localName': '中国',
-    'countryCode': '7'
+    'countryCode': '86'
   },
   {
     'flag': 'assets/images/flags/et.png',
@@ -27,13 +27,13 @@ const List<Map<String, dynamic>> countryList = [
     'flag': 'assets/images/flags/ru.png',
     'name': 'Russia',
     'localName': 'Россия',
-    'countryCode': '86'
+    'countryCode': '7'
   },
   {
     'flag': 'assets/images/flags/cn.png',
     'name': 'China2',
     'localName': '中国',
-    'countryCode': '7'
+    'countryCode': '86'
   },
   {
     'flag': 'assets/images/flags/et.png',
@@ -57,13 +57,13 @@ const List<Map<String, dynamic>> countryList = [
     'flag': 'assets/images/flags/ru.png',
     'name': 'Russia2',
     'localName': 'Россия',
-    'countryCode': '86'
+    'countryCode': '7'
   },
   {
     'flag': 'assets/images/flags/cn.png',
     'name': 'China3',
     'localName': '中国',
-    'countryCode': '7'
+    'countryCode': '86'
   },
   {
     'flag': 'assets/images/flags/et.png',
@@ -87,7 +87,7 @@ const List<Map<String, dynamic>> countryList = [
     'flag': 'assets/images/flags/ru.png',
     'name': 'Russia3',
     'localName': 'Россия',
-    'countryCode': '86'
+    'countryCode': '7'
   },
 ];
 
