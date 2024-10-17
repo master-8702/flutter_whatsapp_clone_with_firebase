@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_whatsapp_clone_with_firebase/constants/colors.dart';
 import 'package:flutter_whatsapp_clone_with_firebase/constants/countries.dart';
-import 'package:flutter_whatsapp_clone_with_firebase/utilities/get_country.dart';
+import 'package:flutter_whatsapp_clone_with_firebase/features/authentication/screens/countries_list.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -91,116 +91,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                 focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                         color: tabColor, width: 2.5))),
-                            onTap: () {
-                              showModalBottomSheet(
-                                // enableDrag: true,
-                                isScrollControlled: true,
-                                showDragHandle: true,
-                                // backgroundColor: tabColor,
-                                context: context,
-                                builder: (context) {
-                                  return DraggableScrollableSheet(
-                                    initialChildSize: 0.4,
-                                    minChildSize: 0.3,
-                                    maxChildSize: 1.0,
-                                    expand: false,
-                                    builder: (context, scrollController) {
-                                      return Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              IconButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  icon:
-                                                      const Icon(Icons.close)),
-                                              const Text(
-                                                "Choose a country",
-                                                style: TextStyle(fontSize: 24),
-                                              ),
-                                            ],
-                                          ),
-                                          Expanded(
-                                            child: ListView.builder(
-                                              controller: scrollController,
-                                              itemCount: countryList.length,
-                                              itemBuilder: (context, index) {
-                                                Map<String, dynamic> country =
-                                                    countryList[index];
+                            onTap: () async {
+                              // here we are receiving selected Country from CountriesList screen after selection
+                              final country = await Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                    // here we are passing currently selected country to CountriesList screen
+                                    // in order to show the previously selected(default) country  
+                                return CountriesList(data: selectedCountry);
+                              }));
 
-                                                return ListTile(
-                                                  title: country ==
-                                                          selectedCountry
-                                                      ? Text(country['name'],
-                                                          style:
-                                                              const TextStyle(
-                                                                  color:
-                                                                      tabColor))
-                                                      : Text(country['name']),
-                                                  subtitle: Text(
-                                                    country['localName'],
-                                                    style: const TextStyle(
-                                                        color: greyColor),
-                                                  ),
-                                                  trailing: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      Text(
-                                                        '+${country['countryCode']}',
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      Visibility.maintain(
-                                                        visible: country ==
-                                                            selectedCountry,
-                                                        child: const Icon(
-                                                          Icons.check,
-                                                          color: tabColor,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  leadingAndTrailingTextStyle:
-                                                      const TextStyle(
-                                                          fontSize: 16,
-                                                          color: greyColor),
-                                                  leading: CircleAvatar(
-                                                    radius: 20,
-                                                    backgroundImage: AssetImage(
-                                                        country['flag']),
-                                                  ),
-                                                  onTap: () {
-                                                    setState(() {
-                                                      if (country['name'] !=
-                                                          null) {
-                                                        selectedCountry =
-                                                            getCountry(country[
-                                                                'name']);
-
-                                                        countryController.text =
-                                                            selectedCountry[
-                                                                'name'];
-                                                        countryCodeController
-                                                                .text =
-                                                            selectedCountry[
-                                                                'countryCode'];
-                                                      }
-                                                    });
-                                                    Navigator.pop(context);
-                                                  },
-                                                );
-                                              },
-                                            ),
-                                          )
-                                        ],
-                                      );
-                                    },
-                                  );
-                                },
-                              );
+                              setState(() {
+                                selectedCountry = country;
+                              });
                             },
                           ),
                         ),
