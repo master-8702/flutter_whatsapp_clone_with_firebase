@@ -1,13 +1,22 @@
-import 'package:firebase_core/firebase_core.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:flutter_whatsapp_clone_with_firebase/firebase_options.dart';
+import 'package:flutter_whatsapp_clone_with_firebase/common/model/user.dart';
+import 'package:flutter_whatsapp_clone_with_firebase/utilities/show_snackbar.dart';
+import 'package:flutter_whatsapp_clone_with_firebase/screens/web_screen_layout.dart';
+import 'package:flutter_whatsapp_clone_with_firebase/responsive/responsive_layout.dart';
+import 'package:flutter_whatsapp_clone_with_firebase/screens/mobile_screen_layout.dart';
+import 'package:flutter_whatsapp_clone_with_firebase/features/authentication/screens/otp_screen.dart';
+import 'package:flutter_whatsapp_clone_with_firebase/common/repository/firebase_storage_repository.dart';
 import 'package:flutter_whatsapp_clone_with_firebase/features/authentication/screens/user_information_screen.dart';
 
-import 'package:flutter_whatsapp_clone_with_firebase/utilities/show_snackbar.dart';
-import 'package:flutter_whatsapp_clone_with_firebase/features/authentication/screens/otp_screen.dart';
 
 class AuthRepository {
   final FirebaseAuth auth;
@@ -17,7 +26,6 @@ class AuthRepository {
 
   void signInWithPhone(BuildContext context, String phoneNumber) async {
     try {
- 
       // the below code works but it needs billing accounts in order to actually authenticate user
       // with phone number
 
@@ -73,6 +81,48 @@ class AuthRepository {
       showSnackBar(context: context, message: e.toString());
     }
   }
+
+  void saveUserDataToFirebase(
+      {required String name,
+      required File? profilePicture,
+      required ProviderRef ref,
+      required BuildContext context}) async {
+    try {
+      String uid = auth.currentUser!.uid;
+      String profileUrl =
+          'https://firebasestorage.googleapis.com/v0/b/whatsapp-clone-backend-ba6fe.firebasestorage.app/o/user.png?alt=media&token=192ea6f0-6e63-4e2d-b8b7-6024dd8df51a';
+
+      if (profilePicture != null) {
+        profileUrl = await ref
+            .read(firebaseStorageRepositoryProvider)
+            .storeFileToFirebase('profilePictures/$uid', profilePicture);
+      }
+
+      final user = CustomUser(
+          name: name,
+          uid: uid,
+          profilePicture: profileUrl,
+          phoneNumber: auth.currentUser!.uid,
+          groupIds: [],
+          isOnline: true);
+      // here we are creating users collection called 'users'(or use it if it already exists)
+      // then create a new document with the user uid that contains the user data
+      await firestore.collection('users').doc(uid).set(user.toMap());
+
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            mobileScreenlayout: MobileScreenLayout(),
+            webScreenlayout: WebScreenLayout(),
+          ),
+        ),
+        (route) => false,
+      );
+    } catch (e) {
+      showSnackBar(context: context, message: e.toString());
+    }
+  }
 }
 
 // final authRepositoryProvider = Provider((ref) {
@@ -80,17 +130,21 @@ class AuthRepository {
 //       auth: FirebaseAuth.instance, firestore: FirebaseFirestore.instance);
 // });
 
-
-// for testing purpose and mock Firebase initialization, using a FutureProvider 
+// for testing purpose and mock Firebase initialization, using a FutureProvider
 // makes it easier to override the initialization logic. (even though the firebase
 // is initialized in the main.dart file)
 final firebaseInitializationProvider = FutureProvider<void>((ref) async {
-  await Firebase.initializeApp();
+  if (Firebase.apps.isEmpty) {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
 });
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   // Ensure Firebase is initialized before accessing FirebaseAuth or Firestore
-  ref.watch(firebaseInitializationProvider); // This ensures initialization is complete
+  ref.watch(
+      firebaseInitializationProvider); // This ensures initialization is complete
 
   return AuthRepository(
     auth: FirebaseAuth.instance,
