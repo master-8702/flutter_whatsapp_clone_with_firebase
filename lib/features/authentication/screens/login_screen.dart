@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:flutter_whatsapp_clone_with_firebase/constants/colors.dart';
 import 'package:flutter_whatsapp_clone_with_firebase/constants/countries.dart';
+import 'package:flutter_whatsapp_clone_with_firebase/utilities/show_snackbar.dart';
 import 'package:flutter_whatsapp_clone_with_firebase/features/authentication/screens/countries_list.dart';
+import 'package:flutter_whatsapp_clone_with_firebase/features/authentication/controller/auth_controller.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   TextEditingController countryController = TextEditingController();
   TextEditingController countryCodeController = TextEditingController();
-  TextEditingController textEditingController3 = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
   var selectedCountry = countryList[1];
 
   @override
@@ -23,6 +27,21 @@ class _LoginScreenState extends State<LoginScreen> {
     countryCodeController.dispose();
 
     super.dispose();
+  }
+
+  void checkNumberAndGoToOTPScreen() {
+    // call trip to avoid extra white spaces before and after the text
+    String phoneNumber = phoneNumberController.text.trim();
+
+    if (countryController.text.isNotEmpty &&
+        countryCodeController.text.isNotEmpty &&
+        phoneNumberController.text.isNotEmpty) {
+      ref.read(authControllerProvider).signInWithPhone(
+          context, '+${selectedCountry['countryCode']}$phoneNumber');
+    } else {
+      showSnackBar(
+          context: context, message: 'Please fill all the fields correctly!');
+    }
   }
 
   @override
@@ -36,6 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
                 children: [
@@ -95,8 +115,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               // here we are receiving selected Country from CountriesList screen after selection
                               final country = await Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
-                                    // here we are passing currently selected country to CountriesList screen
-                                    // in order to show the previously selected(default) country  
+                                // here we are passing currently selected country to CountriesList screen
+                                // in order to show the previously selected(default) country
                                 return CountriesList(data: selectedCountry);
                               }));
 
@@ -148,7 +168,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           flex: 3,
                           // fit: FlexFit.loose,
                           child: TextField(
-                            controller: textEditingController3,
+                            controller: phoneNumberController,
+                            keyboardType: TextInputType.number,
                             textAlign: TextAlign.start,
                             decoration: const InputDecoration(
                               contentPadding: EdgeInsets.only(bottom: -15),
@@ -169,6 +190,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
+              ),
+              const Spacer(),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextButton(
+                        style: const ButtonStyle(
+                            backgroundColor: WidgetStatePropertyAll(tabColor)),
+                        onPressed: checkNumberAndGoToOTPScreen,
+                        child: const Text(
+                          'Next',
+                          style: TextStyle(color: Colors.black),
+                        )),
+                  ),
+                ],
               ),
             ],
           ),
